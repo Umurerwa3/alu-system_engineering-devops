@@ -1,11 +1,26 @@
 #!/usr/bin/env bash
-# This script installs and configures Nginx to return "Holberton School" on the root page
+# This script installs and configures Nginx to serve a webpage and return 200 OK
 
 # Update package list and install Nginx
 apt-get update -y && apt-get install -y nginx
 
-# Create custom index.html with "Holberton School"
-echo "Hello Wold" > /var/www/html/index.html
+# Configure Nginx to serve the custom page
+echo "Holberton School for the win!" > /var/www/html/index.html
+
+# Set up Nginx server block with your domain
+cat > /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
 
 # Restart Nginx without using systemctl
 service nginx restart
