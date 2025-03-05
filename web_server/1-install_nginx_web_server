@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This script installs and configures Nginx to return "Holberton School" on the root page
+
+# Update package list and install Nginx
+apt-get update -y && apt-get install -y nginx
+
+# Create custom index.html with "Holberton School"
+echo "Hello Wold" > /var/www/html/index.html
+
+# Restart Nginx without using systemctl
+service nginx restart
